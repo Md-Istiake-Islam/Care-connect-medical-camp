@@ -1,0 +1,89 @@
+import React, { useEffect, useState } from "react";
+import {
+   createUserWithEmailAndPassword,
+   GoogleAuthProvider,
+   onAuthStateChanged,
+   signInWithEmailAndPassword,
+   signInWithPopup,
+   signOut,
+} from "firebase/auth";
+import auth from "../../Firebase/firebase.config";
+import axios from "axios";
+import AuthContext from "./AuthContext";
+
+const provider = new GoogleAuthProvider();
+
+const AuthProvider = ({ children }) => {
+   const [user, setUser] = useState(null);
+   const [loading, setLoading] = useState(true);
+   const [jwtReady, setJwtReady] = useState(false);
+
+   // Function to create new user
+   const createUser = (email, password) => {
+      setLoading(true);
+      return createUserWithEmailAndPassword(auth, email, password);
+   };
+
+   // Sign in function
+   const signIn = (email, password) => {
+      setLoading(true);
+      return signInWithEmailAndPassword(auth, email, password);
+   };
+
+   //sign out function
+   const logOut = () => {
+      return signOut(auth);
+   };
+
+   //sign in with google
+   const googleSignIn = () => {
+      setLoading(true);
+      return signInWithPopup(auth, provider);
+   };
+
+   useEffect(() => {
+      const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+         setUser(currentUser);
+         setLoading(false);
+         if (currentUser?.email) {
+            const userData = { email: currentUser.email };
+            try {
+               const res = await axios.post(
+                  `${import.meta.env.VITE_ApiUrl}/jwt`,
+                  userData,
+                  { withCredentials: true }
+               );
+
+               if (res.data.success) {
+                  setJwtReady(true);
+               }
+            } catch (error) {
+               console.log(error.message);
+            }
+         }
+      });
+      // Cleanup subscription on unmount
+      // This is important to prevent memory leaks and ensure that the listener is removed when the component unmounts
+      return () => {
+         unSubscribe();
+      };
+   }, []);
+
+   const AuthData = {
+      user,
+      setUser,
+      loading,
+      setLoading,
+      createUser,
+      signIn,
+      logOut,
+      googleSignIn,
+      jwtReady,
+   };
+
+   return (
+      <AuthContext.Provider value={AuthData}>{children}</AuthContext.Provider>
+   );
+};
+
+export default AuthProvider;
