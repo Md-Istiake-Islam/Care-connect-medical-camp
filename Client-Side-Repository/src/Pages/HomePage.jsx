@@ -5,6 +5,7 @@ import FeedBack from "../Components/Home/FeedBack";
 import ImpactStatus from "../Components/Home/ImpactStatus";
 import useTitle from "../Hooks/useTitle";
 import { useLocation } from "react-router";
+import AboutSection from "../Components/Home/AboutSection";
 
 const HomePage = () => {
    //scroll to top
@@ -17,6 +18,9 @@ const HomePage = () => {
       <div>
          <section>
             <BannerSlider />
+         </section>
+         <section id="about-camps">
+            <AboutSection />
          </section>
          <section id="popular-camps">
             <PopularCamp />

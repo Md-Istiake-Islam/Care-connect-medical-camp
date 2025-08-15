@@ -1,16 +1,58 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Menu, Phone, Mail, User, LogOut, LayoutDashboard } from "lucide-react";
+import {
+   Menu,
+   Phone,
+   Mail,
+   User,
+   LogOut,
+   LayoutDashboard,
+   ClipboardList,
+   BadgeCent,
+   UserCog,
+   ClipboardPlus,
+   ClipboardPen,
+   UserRoundCog,
+   BarChart3,
+} from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { Tooltip } from "react-tooltip";
 import AuthContext from "../../Provider/AuthProvider/AuthContext";
 import useUserInfo from "../../Hooks/useUserInfo";
+import ThemeContext from "../../Provider/ThemeProvider/ThemeContext";
 
 const Navbar = () => {
    const navigate = useNavigate();
    const { user, logOut } = useContext(AuthContext);
 
+   //get userinfo from hook
    const { userInfo, role } = useUserInfo();
+
+   //get theme data from theme context
+   const { theme } = useContext(ThemeContext);
+
+   // manage state for switch theme
+   const [darkMode, setDarkMode] = useState(false);
+
+   useEffect(() => {
+      setDarkMode(theme === "dark" ? true : false);
+   }, [setDarkMode, theme, darkMode]);
+
+   //set heading and title text style
+   const linkStyle = darkMode ? "text-gray-300" : "text-gray-700";
+
+   //set heading and title text style
+   const ddMenuStyle = darkMode
+      ? "text-gray-300 hover:bg-gray-700"
+      : "text-gray-700 hover:bg-gray-50";
+
+   //set paragraph style
+   const pStyle = darkMode ? "text-gray-400" : "text-gray-600";
+
+   //container style
+   const containerStyle = darkMode
+      ? "bg-gray-800 border-gray-700"
+      : "bg-white border-gray-100";
 
    //manage dropdown menu
    const [isOpen, setIsOpen] = useState(false);
@@ -53,9 +95,7 @@ const Navbar = () => {
          <li>
             <NavLink
                to={"/"}
-               className={
-                  " px-2 py-0.5 rounded-lg text-gray-600 hover:text-primary-content hover:bg-transparent transition-all duration-300 relative"
-               }
+               className={`px-2 py-0.5 rounded-lg hover:text-primary-content hover:bg-transparent transition-all duration-300 relative ${linkStyle}`}
             >
                <span className="relative !font-nunito px-2">
                   Home
@@ -66,9 +106,7 @@ const Navbar = () => {
          <li>
             <NavLink
                to={`./available-camps`}
-               className={
-                  "!font-nunito px-4 py-0.5 rounded-lg text-gray-600 hover:text-primary-content hover:bg-transparent transition-all duration-300 relative"
-               }
+               className={`px-4 py-0.5 rounded-lg hover:text-primary-content hover:bg-transparent transition-all duration-300 relative ${linkStyle}`}
             >
                <span className="relative !font-nunito">
                   Available Camps
@@ -78,6 +116,59 @@ const Navbar = () => {
          </li>
       </>
    );
+
+   // participant menu
+   const participantMenuItems = [
+      {
+         icon: User,
+         label: "Profile status",
+         link: "/dashboard/profile-status",
+      },
+      {
+         icon: UserCog,
+         label: "Update Profile",
+         link: "/dashboard/update-profile",
+      },
+      {
+         icon: ClipboardList,
+         label: "Registered Camps",
+         link: "/dashboard/registered-camps",
+      },
+      {
+         icon: BadgeCent,
+         label: "Payment History",
+         link: "/dashboard/payment-history",
+      },
+   ];
+
+   // organizer menu
+   const organizerMenuItems = [
+      {
+         icon: User,
+         label: "Profile status",
+         link: "/dashboard/profile-status",
+      },
+      {
+         icon: UserRoundCog,
+         label: "Update Profile",
+         link: "/dashboard/update-profile",
+      },
+      {
+         icon: ClipboardPen,
+         label: "Manage Camps",
+         link: "/dashboard/manage-camps",
+      },
+      {
+         icon: ClipboardList,
+         label: "Manage Registered Camps",
+         link: "/dashboard/manage-reg-camps",
+      },
+   ];
+
+   //menu items
+   const menuItems =
+      role === "Participant" ? participantMenuItems : organizerMenuItems;
+
    return (
       <div className="">
          {/* Top Bar */}
@@ -100,7 +191,11 @@ const Navbar = () => {
          </div>
 
          {/* Main Header */}
-         <nav className="bg-white/95 backdrop-blur-sm shadow-lg">
+         <nav
+            className={` backdrop-blur-sm shadow-lg ${
+               darkMode ? "bg-gray-900" : "bg-white/95"
+            }`}
+         >
             <div className="container mx-auto px-4 py-4">
                <div className="flex items-center justify-between">
                   <div className="flex gap-2">
@@ -122,7 +217,7 @@ const Navbar = () => {
                               <h1 className="text-xl font-bold bg-gradient-to-r from-blue-700 to-green-600 bg-clip-text text-transparent">
                                  CareConnect
                               </h1>
-                              <p className="text-sm text-gray-600 font-medium">
+                              <p className={`text-sm font-medium ${pStyle}`}>
                                  Medical Camps
                               </p>
                            </div>
@@ -184,11 +279,11 @@ const Navbar = () => {
                               </div>
                               {/* Dropdown Menu */}
                               <div
-                                 className={`absolute right-0 top-full mt-3 min-w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 opacity-0 invisible transition-all duration-300 transform ${
+                                 className={`absolute bg-base-100 right-0 top-full mt-3 min-w-72 rounded-2xl shadow-2xl border border-gray-100 opacity-0 invisible transition-all duration-300 transform ${
                                     isOpen
                                        ? "visible translate-y-0 opacity-100"
                                        : "translate-y-2"
-                                 }`}
+                                 } ${containerStyle}`}
                               >
                                  <div className="p-4 border-b border-gray-100">
                                     <div className="flex items-center space-x-3">
@@ -196,7 +291,11 @@ const Navbar = () => {
                                           <img
                                              src={userInfo?.photo}
                                              alt={userInfo?.name || "User"}
-                                             className="w-12 h-12 rounded-full object-cover border-2 border-gray-200"
+                                             className={`w-12 h-12 rounded-full object-cover border-2 ${
+                                                darkMode
+                                                   ? "border-gray-600"
+                                                   : "border-gray-200"
+                                             }`}
                                           />
                                        ) : (
                                           <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
@@ -204,10 +303,22 @@ const Navbar = () => {
                                           </div>
                                        )}
                                        <div>
-                                          <h3 className="font-semibold text-slate-800">
+                                          <h3
+                                             className={`font-semibold  text-lg ${
+                                                darkMode
+                                                   ? "text-slate-200"
+                                                   : "text-slate-8000"
+                                             }`}
+                                          >
                                              {userInfo?.name || "User"}
                                           </h3>
-                                          <p className="text-xs text-gray-600">
+                                          <p
+                                             className={`text-xs  ${
+                                                darkMode
+                                                   ? "text-gray-400"
+                                                   : "text-gray-600"
+                                             }`}
+                                          >
                                              {userInfo?.email}
                                           </p>
                                        </div>
@@ -215,22 +326,50 @@ const Navbar = () => {
                                  </div>
 
                                  <div className="p-2">
-                                    <Link
-                                       to={
-                                          role === "Participant"
-                                             ? "/dashboard/analytics"
-                                             : "/dashboard/add-camp"
-                                       }
-                                       className="flex items-center text-sm space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl transition-colors duration-200"
-                                    >
-                                       <LayoutDashboard className="w-5 h-5" />
-                                       <span>Dashboard</span>
-                                    </Link>
+                                    <ul>
+                                       <li>
+                                          <Link
+                                             to={
+                                                role === "Participant"
+                                                   ? "/dashboard/analytics"
+                                                   : "/dashboard/add-camp"
+                                             }
+                                             className={`flex items-center text-sm space-x-3 px-4 py-3 rounded-xl transition-colors duration-200 ${ddMenuStyle}`}
+                                          >
+                                             <LayoutDashboard className="w-5 h-5" />
+                                             <span>Dashboard</span>
+                                          </Link>
+                                       </li>
+                                       {menuItems.map((item, index) => (
+                                          <li>
+                                             <Link
+                                                key={index}
+                                                to={item.link}
+                                                className={`flex items-center text-sm space-x-3 px-4 py-3 rounded-xl transition-colors duration-200 ${ddMenuStyle} ${
+                                                   darkMode
+                                                      ? "text-gray-300 hover:bg-gray-700"
+                                                      : "text-gray-700 hover:bg-gray-50"
+                                                }
+                                                   `}
+                                             >
+                                                <item.icon
+                                                   size={20}
+                                                   className="mr-3"
+                                                />
+                                                {item.label}
+                                             </Link>
+                                          </li>
+                                       ))}
+                                    </ul>
 
                                     <hr className="my-2 border-gray-100" />
                                     <button
                                        onClick={handleLogout}
-                                       className="w-full flex items-center text-sm space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-colors duration-200"
+                                       className={`w-full flex items-center text-sm space-x-3 px-4 py-3   rounded-xl transition-colors duration-200 ${
+                                          darkMode
+                                             ? " text-red-400 hover:bg-gray-700"
+                                             : " text-red-600 hover:bg-gray-50"
+                                       }`}
                                     >
                                        <LogOut className="w-5 h-5" />
                                        <span>Sign Out</span>
