@@ -9,10 +9,10 @@ import {
    ClipboardList,
    BadgeCent,
    UserCog,
-   ClipboardPlus,
    ClipboardPen,
    UserRoundCog,
-   BarChart3,
+   Sun,
+   Moon,
 } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router";
 import Swal from "sweetalert2";
@@ -29,7 +29,7 @@ const Navbar = () => {
    const { userInfo, role } = useUserInfo();
 
    //get theme data from theme context
-   const { theme } = useContext(ThemeContext);
+   const { theme, toggleTheme } = useContext(ThemeContext);
 
    // manage state for switch theme
    const [darkMode, setDarkMode] = useState(false);
@@ -53,6 +53,14 @@ const Navbar = () => {
    const containerStyle = darkMode
       ? "bg-gray-800 border-gray-700"
       : "bg-white border-gray-100";
+
+   // button Background style
+   const btnBgStyle = darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100";
+
+   // button text style
+   const btnTxtStyle = darkMode
+      ? "text-gray-400 hover:text-gray-200"
+      : "text-gray-500 hover:text-gray-700";
 
    //manage dropdown menu
    const [isOpen, setIsOpen] = useState(false);
@@ -246,146 +254,157 @@ const Navbar = () => {
                      </ul>
 
                      <div className="flex items-center gap-5">
-                        {user ? (
-                           /* User Profile Dropdown */
-                           <div className="group relative">
-                              <div>
-                                 <button
-                                    ref={dropdownRef}
-                                    tabIndex={0}
-                                    className="btn btn-ghost btn-circle avatar w-13 h-13 "
-                                    onClick={() => setIsOpen((prev) => !prev)}
-                                 >
-                                    {userInfo?.photo ? (
-                                       <img
-                                          className="rounded-full ring-2 ring-[#545f72] object-cover"
-                                          alt="user_image"
-                                          src={userInfo && userInfo?.photo}
-                                          data-tooltip-id="my-tooltip"
-                                          data-tooltip-content={
-                                             userInfo && userInfo?.name
-                                          }
-                                       />
-                                    ) : (
-                                       <div className="w-full h-full bg-gradient-to-br from-blue-500 to-green-500 rounded-full !flex items-center justify-center">
-                                          <User className="w-8 text-white" />
-                                       </div>
-                                    )}
-                                 </button>
-                                 <Tooltip
-                                    id="my-tooltip"
-                                    className="z-50 text-sm"
-                                 />
-                              </div>
-                              {/* Dropdown Menu */}
-                              <div
-                                 className={`absolute bg-base-100 right-0 top-full mt-3 min-w-72 rounded-2xl shadow-2xl border border-gray-100 opacity-0 invisible transition-all duration-300 transform ${
-                                    isOpen
-                                       ? "visible translate-y-0 opacity-100"
-                                       : "translate-y-2"
-                                 } ${containerStyle}`}
-                              >
-                                 <div className="p-4 border-b border-gray-100">
-                                    <div className="flex items-center space-x-3">
+                        <button
+                           onClick={() => toggleTheme()}
+                           className={`p-2 rounded-lg transition-colors ${btnBgStyle} ${btnTxtStyle}`}
+                        >
+                           {darkMode ? <Sun size={25} /> : <Moon size={25} />}
+                        </button>
+                        <div>
+                           {user ? (
+                              /* User Profile Dropdown */
+                              <div className="group relative">
+                                 <div>
+                                    <button
+                                       ref={dropdownRef}
+                                       tabIndex={0}
+                                       className="btn btn-ghost btn-circle avatar w-13 h-13 "
+                                       onClick={() =>
+                                          setIsOpen((prev) => !prev)
+                                       }
+                                    >
                                        {userInfo?.photo ? (
                                           <img
-                                             src={userInfo?.photo}
-                                             alt={userInfo?.name || "User"}
-                                             className={`w-12 h-12 rounded-full object-cover border-2 ${
-                                                darkMode
-                                                   ? "border-gray-600"
-                                                   : "border-gray-200"
-                                             }`}
+                                             className="rounded-full ring-2 ring-[#545f72] object-cover"
+                                             alt="user_image"
+                                             src={userInfo && userInfo?.photo}
+                                             data-tooltip-id="my-tooltip"
+                                             data-tooltip-content={
+                                                userInfo && userInfo?.name
+                                             }
                                           />
                                        ) : (
-                                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
-                                             <User className="w-6 h-6 text-white" />
+                                          <div className="w-full h-full bg-gradient-to-br from-blue-500 to-green-500 rounded-full !flex items-center justify-center">
+                                             <User className="w-8 text-white" />
                                           </div>
                                        )}
-                                       <div>
-                                          <h3
-                                             className={`font-semibold  text-lg ${
-                                                darkMode
-                                                   ? "text-slate-200"
-                                                   : "text-slate-8000"
-                                             }`}
-                                          >
-                                             {userInfo?.name || "User"}
-                                          </h3>
-                                          <p
-                                             className={`text-xs  ${
-                                                darkMode
-                                                   ? "text-gray-400"
-                                                   : "text-gray-600"
-                                             }`}
-                                          >
-                                             {userInfo?.email}
-                                          </p>
+                                    </button>
+                                    <Tooltip
+                                       id="my-tooltip"
+                                       className="z-50 text-sm"
+                                    />
+                                 </div>
+                                 {/* Dropdown Menu */}
+                                 <div
+                                    className={`absolute bg-base-100 right-0 top-full mt-3 min-w-72 rounded-2xl shadow-2xl border border-gray-100 opacity-0 invisible transition-all duration-300 transform ${
+                                       isOpen
+                                          ? "visible translate-y-0 opacity-100"
+                                          : "translate-y-2"
+                                    } ${containerStyle}`}
+                                 >
+                                    <div className="p-4 border-b border-gray-100">
+                                       <div className="flex items-center space-x-3">
+                                          {userInfo?.photo ? (
+                                             <img
+                                                src={userInfo?.photo}
+                                                alt={userInfo?.name || "User"}
+                                                className={`w-12 h-12 rounded-full object-cover border-2 ${
+                                                   darkMode
+                                                      ? "border-gray-600"
+                                                      : "border-gray-200"
+                                                }`}
+                                             />
+                                          ) : (
+                                             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
+                                                <User className="w-6 h-6 text-white" />
+                                             </div>
+                                          )}
+                                          <div>
+                                             <h3
+                                                className={`font-semibold  text-lg ${
+                                                   darkMode
+                                                      ? "text-slate-200"
+                                                      : "text-slate-8000"
+                                                }`}
+                                             >
+                                                {userInfo?.name || "User"}
+                                             </h3>
+                                             <p
+                                                className={`text-xs  ${
+                                                   darkMode
+                                                      ? "text-gray-400"
+                                                      : "text-gray-600"
+                                                }`}
+                                             >
+                                                {userInfo?.email}
+                                             </p>
+                                          </div>
                                        </div>
                                     </div>
-                                 </div>
 
-                                 <div className="p-2">
-                                    <ul>
-                                       <li>
-                                          <Link
-                                             to={
-                                                role === "Participant"
-                                                   ? "/dashboard/analytics"
-                                                   : "/dashboard/add-camp"
-                                             }
-                                             className={`flex items-center text-sm space-x-3 px-4 py-3 rounded-xl transition-colors duration-200 ${ddMenuStyle}`}
-                                          >
-                                             <LayoutDashboard className="w-5 h-5" />
-                                             <span>Dashboard</span>
-                                          </Link>
-                                       </li>
-                                       {menuItems.map((item, index) => (
+                                    <div className="p-2">
+                                       <ul>
                                           <li>
                                              <Link
-                                                key={index}
-                                                to={item.link}
-                                                className={`flex items-center text-sm space-x-3 px-4 py-3 rounded-xl transition-colors duration-200 ${ddMenuStyle} ${
-                                                   darkMode
-                                                      ? "text-gray-300 hover:bg-gray-700"
-                                                      : "text-gray-700 hover:bg-gray-50"
+                                                to={
+                                                   role === "Participant"
+                                                      ? "/dashboard/analytics"
+                                                      : "/dashboard/add-camp"
                                                 }
-                                                   `}
+                                                className={`flex items-center text-sm space-x-3 px-4 py-3 rounded-xl transition-colors duration-200 ${ddMenuStyle}`}
                                              >
-                                                <item.icon
-                                                   size={20}
-                                                   className="mr-3"
-                                                />
-                                                {item.label}
+                                                <LayoutDashboard className="w-5 h-5" />
+                                                <span>Dashboard</span>
                                              </Link>
                                           </li>
-                                       ))}
-                                    </ul>
+                                          {menuItems.map((item, index) => (
+                                             <li key={index}>
+                                                <Link
+                                                   to={item.link}
+                                                   className={`flex items-center text-sm space-x-3 px-4 py-3 rounded-xl transition-colors duration-200 ${ddMenuStyle} ${
+                                                      darkMode
+                                                         ? "text-gray-300 hover:bg-gray-700"
+                                                         : "text-gray-700 hover:bg-gray-50"
+                                                   }
+                                                   `}
+                                                >
+                                                   <item.icon
+                                                      size={20}
+                                                      className="mr-3"
+                                                   />
+                                                   {item.label}
+                                                </Link>
+                                             </li>
+                                          ))}
+                                       </ul>
 
-                                    <hr className="my-2 border-gray-100" />
-                                    <button
-                                       onClick={handleLogout}
-                                       className={`w-full flex items-center text-sm space-x-3 px-4 py-3   rounded-xl transition-colors duration-200 ${
-                                          darkMode
-                                             ? " text-red-400 hover:bg-gray-700"
-                                             : " text-red-600 hover:bg-gray-50"
-                                       }`}
-                                    >
-                                       <LogOut className="w-5 h-5" />
-                                       <span>Sign Out</span>
-                                    </button>
+                                       <hr className="my-2 border-gray-100" />
+                                       <button
+                                          onClick={handleLogout}
+                                          className={`w-full flex items-center text-sm space-x-3 px-4 py-3   rounded-xl transition-colors duration-200 ${
+                                             darkMode
+                                                ? " text-red-400 hover:bg-gray-700"
+                                                : " text-red-600 hover:bg-gray-50"
+                                          }`}
+                                       >
+                                          <LogOut className="w-5 h-5" />
+                                          <span>Sign Out</span>
+                                       </button>
+                                    </div>
                                  </div>
                               </div>
-                           </div>
-                        ) : (
-                           /* Login Button for Non-authenticated Users */
-                           <button
-                              onClick={() => navigate("./authentication/login")}
-                              className="bg-gradient-to-r from-blue-600 to-green-500 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105"
-                           >
-                              Join Camp
-                           </button>
-                        )}
+                           ) : (
+                              /* Login Button for Non-authenticated Users */
+                              <button
+                                 onClick={() =>
+                                    navigate("./authentication/login")
+                                 }
+                                 className="bg-gradient-to-r from-blue-600 to-green-500 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transition-all duration-300 hover:scale-105"
+                              >
+                                 Join Camp
+                              </button>
+                           )}
+                        </div>
                      </div>
                   </div>
                </div>
