@@ -69,6 +69,9 @@ const run = async () => {
    //Slider items collection
    const sliderCollection = db.collection("BannerSlider");
 
+   //Slider items collection
+   const medicalTeamsCollection = db.collection("MedicalTeams");
+
    //Medical camp items collection
    const campCollection = db.collection("Medical_Camps");
 
@@ -211,6 +214,12 @@ const run = async () => {
          res.send(result);
       });
 
+      // get medical teams data
+      app.get("/medical-teams", async (req, res) => {
+         const result = await medicalTeamsCollection.find().toArray();
+         res.send(result);
+      });
+
       // post camp data
       app.post("/camps", verifyToken, verifyOrganizer, async (req, res) => {
          const campData = req.body;
@@ -232,8 +241,10 @@ const run = async () => {
 
          const sortOptions = {
             participants: { participantCount: -1 },
-            fees: { fees: 1 },
-            name: { name: 1 },
+            fees: {
+               campFees: -1,
+            },
+            name: { campName: -1 },
             date: { date: -1 },
          };
 
@@ -244,7 +255,7 @@ const run = async () => {
 
          res.send(camps);
       });
-      // get all camps data
+      // get popular camps data
       app.get("/popular-camps", async (req, res) => {
          const camps = await campCollection
             .find()
