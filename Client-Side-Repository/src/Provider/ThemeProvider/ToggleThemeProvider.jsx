@@ -16,13 +16,18 @@ const ToggleThemeProvider = ({ children }) => {
       document.documentElement.setAttribute("data-theme", newTheme);
       localStorage.setItem("theme", newTheme);
    };
-   <button onClick={toggleTheme} className="btn btn-sm btn-outline">
-      {theme === "light" ? "🌙 Dark" : "☀️ Light"}
-   </button>;
+
+   // manage state for switch theme
+   const [darkMode, setDarkMode] = useState(false);
+
+   useEffect(() => {
+      setDarkMode(theme === "dark" ? true : false);
+   }, [setDarkMode, theme, darkMode]);
 
    const ThemeData = {
       theme,
       toggleTheme,
+      darkMode,
    };
 
    return (

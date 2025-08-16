@@ -1,28 +1,42 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import usePopularCamp from "../../Hooks/usePopularCamp";
 import LoadingSpinner from "../Shared/LoadingElement/LoadingSpinner";
 import PopularCampsCard from "./Cards/PopularCampsCard";
 import { Link } from "react-router";
+import ThemeContext from "../../Provider/ThemeProvider/ThemeContext";
 
 const PopularCamp = () => {
-   // State for layout, sorting, search and dropdown visibility
-
+   //get camps data from hook
    const { camps, isLoading } = usePopularCamp();
+
+   //get theme data from theme context
+   const { darkMode } = useContext(ThemeContext);
+
+   //set heading and title text style
+   const textHT = darkMode ? "text-white" : "text-gray-900";
+
+   //set paragraph style
+   const pStyle = darkMode ? "text-gray-400" : "text-gray-600";
+
+   //container style
+   const containerStyle = darkMode
+      ? "bg-gray-800 border-gray-700/50"
+      : "bg-white border-gray-100";
 
    if (isLoading || !camps) {
       return <LoadingSpinner />;
    }
 
    return (
-      <div className="bg-gray-50 py-16">
-         <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className={`py-16 ${darkMode ? "bg-gray-800" : "bg-gray-50"}`}>
+         <div className="container lg:max-w-7xl mx-auto px-6 py-8">
             {/* Header */}
             <div className="text-center mb-12">
-               <h1 className="text-4xl font-bold text-slate-800 mb-4">
+               <h1 className={`text-3xl md:text-4xl font-bold mb-4 ${textHT}`}>
                   Most Popular Camps
                </h1>
-               <p className=" text-gray-600 max-w-2xl mx-auto">
+               <p className={`max-w-2xl mx-auto ${pStyle}`}>
                   Discover the most loved camps chosen by our community. These
                   top-rated experiences are filling up fast—don’t miss your
                   chance to join!
@@ -35,7 +49,14 @@ const PopularCamp = () => {
                className={`grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3`}
             >
                {camps.map((camp) => (
-                  <PopularCampsCard key={camp._id} camp={camp} />
+                  <PopularCampsCard
+                     key={camp._id}
+                     camp={camp}
+                     darkMode={darkMode}
+                     containerStyle={containerStyle}
+                     textHT={textHT}
+                     pStyle={pStyle}
+                  />
                ))}
             </div>
 

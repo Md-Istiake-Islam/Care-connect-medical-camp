@@ -1,10 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
    Heart,
    Users,
    Stethoscope,
-   TrendingUp,
-   MapPin,
    Star,
    MessageCircle,
    ThumbsUp,
@@ -15,10 +13,30 @@ import LoadingSpinner from "../Shared/LoadingElement/LoadingSpinner";
 import StatCard from "./Cards/StatCard";
 import { Link } from "react-router";
 import AuthContext from "../../Provider/AuthProvider/AuthContext";
+import ThemeContext from "../../Provider/ThemeProvider/ThemeContext";
 
 const ImpactStatus = () => {
    //get use from auth context
    const { user } = useContext(AuthContext);
+
+   //get theme data from theme context
+   const { darkMode } = useContext(ThemeContext);
+
+   //set heading and title text style
+   const textHT = darkMode ? "text-white" : "text-gray-900";
+
+   //set paragraph style
+   const pStyle = darkMode ? "text-gray-400" : "text-gray-600";
+
+   //container style
+   const containerStyle = darkMode
+      ? "bg-gray-800 border-gray-700"
+      : "bg-white border-gray-100";
+
+   //button style
+   const buttonStyle = darkMode
+      ? "border-blue-400 text-blue-400"
+      : "border-blue-600 text-blue-600";
 
    const { impactStats, isLoading: impactLoading } = useImpactStats();
    const { Feedback, feedBackStats, isLoading } = useGetFeedBack();
@@ -72,13 +90,19 @@ const ImpactStatus = () => {
       },
    ];
    return (
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+      <section
+         className={`py-16 bg-gradient-to-br transition-colors duration-300 ${
+            darkMode
+               ? "from-gray-800 to-blue-900/20"
+               : "from-gray-50 to-blue-50"
+         }`}
+      >
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
-               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+               <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${textHT}`}>
                   Our Impact in Numbers
                </h2>
-               <p className="text-gray-600 max-w-2xl mx-auto">
+               <p className={`max-w-2xl mx-auto ${pStyle}`}>
                   Transforming communities through accessible healthcare and
                   making a measurable difference in people's lives
                </p>
@@ -86,16 +110,24 @@ const ImpactStatus = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                {stats.map((stat, index) => (
-                  <StatCard key={index} stat={stat} />
+                  <StatCard
+                     key={index}
+                     stat={stat}
+                     containerStyle={containerStyle}
+                     textHT={textHT}
+                     pStyle={pStyle}
+                  />
                ))}
             </div>
 
             <div className="mt-12 text-center">
-               <div className="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4">
+               <div
+                  className={`rounded-xl shadow-lg p-8 max-w-4xl mx-auto border ${containerStyle}`}
+               >
+                  <h3 className={`text-2xl font-bold mb-4 ${textHT}`}>
                      Join Our Mission
                   </h3>
-                  <p className="text-gray-600 mb-6">
+                  <p className={`mb-6 ${pStyle}`}>
                      Every medical camp we organize brings hope and healing to
                      underserved communities. Your support helps us reach more
                      people and save more lives.
@@ -108,14 +140,18 @@ const ImpactStatus = () => {
                            </button>
                         </Link>
                         <Link to={"./authentication/register"}>
-                           <button className="px-8 py-3 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all font-semibold">
+                           <button
+                              className={`px-8 py-3 border-2 rounded-lg hover:bg-blue-600 hover:text-white transition-all font-semibold ${buttonStyle}`}
+                           >
                               join with us
                            </button>
                         </Link>
                      </div>
                   ) : (
                      <div className="flex justify-center">
-                        <div className="px-8 py-3 border-2 border-blue-600 text-blue-600 rounded-lg font-semibold">
+                        <div
+                           className={`px-8 py-3 border-2 rounded-lg font-semibold ${buttonStyle}`}
+                        >
                            Thanks for join with us
                         </div>
                      </div>

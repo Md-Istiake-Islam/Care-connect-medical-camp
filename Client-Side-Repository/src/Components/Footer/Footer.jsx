@@ -68,7 +68,7 @@ const Footer = () => {
    );
 
    return (
-      <div className={`w-full bg-stone-800`}>
+      <div className={`w-full bg-gray-800`}>
          <div className="">
             <footer className="footer sm:footer-horizontal p-10 text-base-300 container mx-auto lg:max-w-[1200px] px-3">
                <nav>

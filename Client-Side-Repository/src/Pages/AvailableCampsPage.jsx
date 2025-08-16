@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { useAllCamps } from "../Hooks/useAllCamps";
 import ControlsGroup from "../Components/AvailableCamps/ControlsGroup";
@@ -6,6 +6,7 @@ import CampsCard from "../Components/AvailableCamps/CampsCard";
 import LoadingSpinner from "../Components/Shared/LoadingElement/LoadingSpinner";
 import useTitle from "../Hooks/useTitle";
 import { useLocation } from "react-router";
+import ThemeContext from "../Provider/ThemeProvider/ThemeContext";
 
 const AvailableCampsPage = () => {
    //scroll to top
@@ -25,12 +26,30 @@ const AvailableCampsPage = () => {
       sortBy,
    });
 
+   //get theme data from theme context
+   const { darkMode } = useContext(ThemeContext);
+
+   //set heading and title text style
+   const textHT = darkMode ? "text-white" : "text-gray-900";
+
+   //set paragraph style
+   const pStyle = darkMode ? "text-gray-400" : "text-gray-600";
+
+   //container style
+   const containerStyle = darkMode
+      ? "bg-gray-800 border-gray-700/50"
+      : "bg-white border-gray-100";
+
    if (isLoading || !camps) {
       return <LoadingSpinner />;
    }
 
    return (
-      <div className="min-h-screen bg-gray-50 pt-12">
+      <div
+         className={`min-h-screen ${
+            darkMode ? "bg-[#101828]" : "bg-gray-50"
+         } pt-12`}
+      >
          <div className="container mx-auto px-4 py-8">
             {/* Header */}
             <div className="text-center mb-12">

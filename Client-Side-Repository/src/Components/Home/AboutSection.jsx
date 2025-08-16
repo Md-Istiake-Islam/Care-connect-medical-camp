@@ -4,14 +4,7 @@ import ThemeContext from "../../Provider/ThemeProvider/ThemeContext";
 
 const AboutSection = () => {
    //get theme data from theme context
-   const { theme } = useContext(ThemeContext);
-
-   // manage state for switch theme
-   const [darkMode, setDarkMode] = useState(false);
-
-   useEffect(() => {
-      setDarkMode(theme === "dark" ? true : false);
-   }, [setDarkMode, theme, darkMode]);
+   const { darkMode } = useContext(ThemeContext);
 
    //set heading and title text style
    const textHT = darkMode ? "text-white" : "text-gray-900";
@@ -58,7 +51,7 @@ const AboutSection = () => {
             darkMode ? "bg-gray-900" : "bg-white"
          }`}
       >
-         <div className="max-w-7xl mx-auto px-6 py-8">
+         <div className="container lg:max-w-7xl mx-auto px-6 py-8">
             <div className="text-center mb-12">
                <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${textHT}`}>
                   Welcome Care Connect

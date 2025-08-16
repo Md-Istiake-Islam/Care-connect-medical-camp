@@ -77,13 +77,13 @@ const BannerSlider = () => {
                   {/* Text Content */}
                   <div className="text-white space-y-6">
                      <div className="space-y-2">
-                        <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
+                        <h1 className="line-clamp-2 text-4xl xl:text-6xl font-bold leading-tight">
                            {currentStory.title}
                         </h1>
                         <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full animate-pulse" />
                      </div>
 
-                     <p className="text-lg lg:text-xl text-blue-50 leading-relaxed max-w-2xl font-light">
+                     <p className="text-lg xl:text-xl text-blue-50 leading-relaxed max-w-2xl font-light">
                         {currentStory.content}
                      </p>
 

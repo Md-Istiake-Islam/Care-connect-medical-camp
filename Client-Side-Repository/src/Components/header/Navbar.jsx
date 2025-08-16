@@ -103,7 +103,9 @@ const Navbar = () => {
          <li>
             <NavLink
                to={"/"}
-               className={`px-2 py-0.5 rounded-lg hover:text-primary-content hover:bg-transparent transition-all duration-300 relative ${linkStyle}`}
+               className={`px-2 py-0.5 rounded-lg  hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+                  darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+               }`}
             >
                <span className="relative !font-nunito px-2">
                   Home
@@ -114,7 +116,9 @@ const Navbar = () => {
          <li>
             <NavLink
                to={`./available-camps`}
-               className={`px-4 py-0.5 rounded-lg hover:text-primary-content hover:bg-transparent transition-all duration-300 relative ${linkStyle}`}
+               className={`px-4 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+                  darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+               }`}
             >
                <span className="relative !font-nunito">
                   Available Camps
