@@ -8,6 +8,7 @@ import { useLocation } from "react-router";
 import AboutSection from "../Components/Home/AboutSection";
 import ThemeContext from "../Provider/ThemeProvider/ThemeContext";
 import MedicalTeam from "../Components/Home/MedicalTeam";
+import HowItWorks from "@/Components/Home/HowItWorks";
 
 const HomePage = () => {
    //scroll to top
@@ -34,12 +35,16 @@ const HomePage = () => {
          <section id="popular-camps">
             <PopularCamp />
          </section>
-         <section id="feedBack">
-            <FeedBack />
+         <section id="how-it-works">
+            <HowItWorks />
          </section>
          <section id="medical-teams">
             <MedicalTeam />
          </section>
+         <section id="feedBack">
+            <FeedBack />
+         </section>
+
          <section id="impact-stats">
             <ImpactStatus />
          </section>
