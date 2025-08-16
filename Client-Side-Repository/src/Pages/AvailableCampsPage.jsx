@@ -47,16 +47,16 @@ const AvailableCampsPage = () => {
    return (
       <div
          className={`min-h-screen ${
-            darkMode ? "bg-[#101828]" : "bg-gray-50"
+            darkMode ? "bg-[#101828f6]" : "bg-gray-50"
          } pt-12`}
       >
          <div className="container mx-auto px-4 py-8">
             {/* Header */}
             <div className="text-center mb-12">
-               <h1 className="text-4xl font-bold text-slate-800 mb-4">
+               <h1 className={`text-4xl md:text-4xl font-bold mb-4 ${textHT}`}>
                   Available Medical Camps
                </h1>
-               <p className=" text-gray-600 max-w-2xl mx-auto">
+               <p className={`max-w-2xl mx-auto ${pStyle}`}>
                   Join our medical camps and make a difference in communities
                   across the country. Find the perfect camp that matches your
                   schedule and expertise.
@@ -73,6 +73,9 @@ const AvailableCampsPage = () => {
                   setSortBy={setSortBy}
                   layout={layout}
                   setLayout={setLayout}
+                  containerStyle={containerStyle}
+                  darkMode={darkMode}
+                  pStyle={pStyle}
                />
             }
 
@@ -86,7 +89,14 @@ const AvailableCampsPage = () => {
                }`}
             >
                {camps.map((camp) => (
-                  <CampsCard key={camp._id} camp={camp} />
+                  <CampsCard
+                     key={camp._id}
+                     camp={camp}
+                     darkMode={darkMode}
+                     containerStyle={containerStyle}
+                     textHT={textHT}
+                     pStyle={pStyle}
+                  />
                ))}
             </div>
 

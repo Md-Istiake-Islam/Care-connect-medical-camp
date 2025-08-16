@@ -204,8 +204,10 @@ const Navbar = () => {
 
          {/* Main Header */}
          <nav
-            className={` backdrop-blur-sm shadow-lg ${
-               darkMode ? "bg-gray-900" : "bg-white/95"
+            className={` backdrop-blur-sm shadow-lg border-b ${
+               darkMode
+                  ? "bg-gray-900 border-gray-800"
+                  : "bg-white/95 border-gray-100"
             }`}
          >
             <div className="container mx-auto px-4 py-4">
