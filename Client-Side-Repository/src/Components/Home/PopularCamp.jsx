@@ -29,7 +29,11 @@ const PopularCamp = () => {
    }
 
    return (
-      <div className={`py-16 ${darkMode ? "bg-gray-800" : "bg-gray-50"}`}>
+      <div
+         className={`py-16 transition-colors duration-300 ${
+            darkMode ? "bg-gray-800" : "bg-gray-50"
+         }`}
+      >
          <div className="container lg:max-w-7xl mx-auto px-6 py-8">
             {/* Header */}
             <div className="text-center mb-12">

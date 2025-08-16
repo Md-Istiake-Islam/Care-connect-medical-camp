@@ -7,6 +7,7 @@ import useTitle from "../Hooks/useTitle";
 import { useLocation } from "react-router";
 import AboutSection from "../Components/Home/AboutSection";
 import ThemeContext from "../Provider/ThemeProvider/ThemeContext";
+import MedicalTeam from "../Components/Home/MedicalTeam";
 
 const HomePage = () => {
    //scroll to top
@@ -35,6 +36,9 @@ const HomePage = () => {
          </section>
          <section id="feedBack">
             <FeedBack />
+         </section>
+         <section id="medical-teams">
+            <MedicalTeam />
          </section>
          <section id="impact-stats">
             <ImpactStatus />
