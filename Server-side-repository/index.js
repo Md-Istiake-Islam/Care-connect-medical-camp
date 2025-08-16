@@ -72,6 +72,9 @@ const run = async () => {
    //Slider items collection
    const medicalTeamsCollection = db.collection("MedicalTeams");
 
+   //Slider items collection
+   const workingStepsCollection = db.collection("workingSteps");
+
    //Medical camp items collection
    const campCollection = db.collection("Medical_Camps");
 
@@ -217,6 +220,12 @@ const run = async () => {
       // get medical teams data
       app.get("/medical-teams", async (req, res) => {
          const result = await medicalTeamsCollection.find().toArray();
+         res.send(result);
+      });
+
+      // get working steps data
+      app.get("/working-steps", async (req, res) => {
+         const result = await workingStepsCollection.find().toArray();
          res.send(result);
       });
 
