@@ -12,6 +12,7 @@ import HeroSection from "../Components/CampDetails/HeroSection";
 import JoinCampModal from "../Components/CampDetails/JoinCampModal";
 import useCurrentUserRegCamps from "../Hooks/useCurrentUserRegCamps";
 import useTitle from "../Hooks/useTitle";
+import ThemeContext from "../Provider/ThemeProvider/ThemeContext";
 
 const CampDetailPage = () => {
    //scroll to top
@@ -23,6 +24,20 @@ const CampDetailPage = () => {
 
    const navigate = useNavigate();
    const { user } = useContext(AuthContext);
+
+   //get theme data from theme context
+   const { darkMode } = useContext(ThemeContext);
+
+   //set heading and title text style
+   const textHT = darkMode ? "text-gray-200" : "text-gray-900";
+
+   //set paragraph style
+   const pStyle = darkMode ? "text-gray-400" : "text-gray-600";
+
+   //container style
+   const containerStyle = darkMode
+      ? "bg-gray-800 border-gray-700/50"
+      : "bg-white border-gray-100";
 
    //get id from params
    const { id } = useParams();
@@ -104,13 +119,21 @@ const CampDetailPage = () => {
       setShowJoinModal(false);
    };
    return (
-      <div className="min-h-screen bg-gray-50 pt-8 ">
+      <div
+         className={`min-h-screen  pt-8 ${
+            darkMode ? "bg-[#101828f6]" : "bg-gray-50"
+         } `}
+      >
          <div className="container mx-auto px-4 py-8">
             {/* Back Button */}
             <div className="mb-6">
                <Link
                   to="/available-camps"
-                  className="inline-flex items-center space-x-2 text-gray-600 hover:text-slate-800 transition-colors duration-300"
+                  className={`inline-flex items-center space-x-2  transition-colors duration-300 ${
+                     darkMode
+                        ? "text-gray-300 hover:text-slate-200"
+                        : "text-gray-600 hover:text-slate-800"
+                  }`}
                >
                   <ArrowLeft className="w-5 h-5" />
                   <span className="font-medium">Back to All Camps</span>
@@ -126,6 +149,7 @@ const CampDetailPage = () => {
                      campName={campName}
                      handleShare={handleShare}
                      campFees={campFees}
+                     containerStyle={containerStyle}
                   />
 
                   {/* Camp Details */}
@@ -137,11 +161,22 @@ const CampDetailPage = () => {
                         participantCount={participantCount}
                         healthPro={healthPro}
                         description={description}
+                        containerStyle={containerStyle}
+                        darkMode={darkMode}
+                        pStyle={pStyle}
+                        textHT={textHT}
                      />
                   }
 
                   {/* Requirements & Facilities */}
-                  {<ReqAndFacilities />}
+                  {
+                     <ReqAndFacilities
+                        containerStyle={containerStyle}
+                        darkMode={darkMode}
+                        pStyle={pStyle}
+                        textHT={textHT}
+                     />
+                  }
                </div>
 
                {/* Sidebar */}
@@ -155,6 +190,10 @@ const CampDetailPage = () => {
                         isJoining={isJoining}
                         handleJoinCamp={handleJoinCamp}
                         hasJoined={hasJoined}
+                        containerStyle={containerStyle}
+                        darkMode={darkMode}
+                        pStyle={pStyle}
+                        textHT={textHT}
                      />
                   }
                </div>
@@ -166,6 +205,10 @@ const CampDetailPage = () => {
             onClose={handleModalClose}
             camp={camp}
             setIsJoining={setIsJoining}
+            containerStyle={containerStyle}
+            darkMode={darkMode}
+            pStyle={pStyle}
+            textHT={textHT}
          />
       </div>
    );

@@ -1,9 +1,17 @@
 import { Share2 } from "lucide-react";
 import React from "react";
 
-const HeroSection = ({ imageUrl, campName, handleShare, campFees }) => {
+const HeroSection = ({
+   imageUrl,
+   campName,
+   handleShare,
+   campFees,
+   containerStyle,
+}) => {
    return (
-      <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+      <div
+         className={`rounded-3xl shadow-xl overflow-hidden border ${containerStyle}`}
+      >
          <div className="relative aspect-[16/8]">
             <img
                src={imageUrl}

@@ -10,31 +10,47 @@ const CampDetailsSidebar = ({
    isJoining,
    handleJoinCamp,
    hasJoined,
+   containerStyle,
+   darkMode,
+   pStyle,
+   textHT,
 }) => {
    const { role } = useUserInfo();
    return (
       <div className="sticky top-36  space-y-6">
-         <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 ">
+         <div className={`rounded-2xl shadow-xl p-6 border ${containerStyle} `}>
             <div className="text-center mb-6">
                <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                   <Heart className="w-8 h-8 text-white" />
                </div>
-               <h3 className="text-2xl font-bold text-slate-800 mb-2">
+               <h3 className={`text-2xl font-bold mb-2 ${textHT}`}>
                   Join This Camp
                </h3>
-               <p className="text-gray-600">Make a difference in healthcare</p>
+               <p className={`${pStyle}`}>Make a difference in healthcare</p>
             </div>
 
             {/* Fee Information */}
-            <div className="bg-gray-50 rounded-xl p-4 mb-6">
+            <div
+               className={`rounded-xl p-4 mb-6 ${
+                  darkMode ? "bg-gray-700/40" : "bg-gray-50"
+               }`}
+            >
                {
                   <div className="flex items-center justify-between">
-                     <span className="text-gray-700 font-medium">
-                        Camp Fee:
-                     </span>
+                     <span className={`font-medium ${pStyle}`}>Camp Fee:</span>
                      <span
                         className={`text-2xl font-bold ${
-                           campFees === 0 ? "text-green-600" : "text-slate-800"
+                           campFees === 0
+                              ? `text-green-600 ${
+                                   darkMode
+                                      ? "text-green-400"
+                                      : "text-green-600"
+                                }`
+                              : ` ${
+                                   darkMode
+                                      ? "text-slate-300"
+                                      : "text-slate-800"
+                                }`
                         }`}
                      >
                         {campFees === 0 ? "Free" : `${campFees} Taka`}
@@ -88,8 +104,8 @@ const CampDetailsSidebar = ({
          </div>
 
          {/* Contact Information */}
-         <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-            <h3 className="text-xl font-bold text-slate-800 mb-4">
+         <div className={`rounded-2xl shadow-lg p-6 border ${containerStyle}`}>
+            <h3 className={`text-xl font-bold mb-4 ${textHT}`}>
                Contact With Organizer
             </h3>
             <div className="space-y-4">
@@ -98,8 +114,8 @@ const CampDetailsSidebar = ({
                      <User className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                     <p className="text-xs text-gray-600">Name</p>
-                     <p className="font-medium text-slate-800">
+                     <p className={`text-xs ${pStyle}`}>Name</p>
+                     <p className={`font-medium ${textHT}`}>
                         {organizer?.name}
                      </p>
                   </div>
@@ -109,8 +125,8 @@ const CampDetailsSidebar = ({
                      <Phone className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                     <p className="text-xs text-gray-600">Phone</p>
-                     <p className="font-medium text-slate-800">
+                     <p className={`text-xs ${pStyle}`}>Phone</p>
+                     <p className={`font-medium ${textHT}`}>
                         {organizer?.phone}
                      </p>
                   </div>
@@ -120,8 +136,8 @@ const CampDetailsSidebar = ({
                      <Mail className="w-5 h-5 text-green-600" />
                   </div>
                   <div>
-                     <p className="text-xs text-gray-600">Email</p>
-                     <p className="font-medium text-slate-800">
+                     <p className={`text-xs ${pStyle}`}>Email</p>
+                     <p className={`font-medium ${textHT}`}>
                         {organizer?.email}
                      </p>
                   </div>
