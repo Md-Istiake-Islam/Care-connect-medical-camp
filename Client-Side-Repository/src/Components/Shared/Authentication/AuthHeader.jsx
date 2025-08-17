@@ -3,9 +3,15 @@ import { Link } from "react-router";
 import { ArrowLeft } from "lucide-react";
 import { LuLogIn } from "react-icons/lu";
 
-const AuthHeader = () => {
+const AuthHeader = ({ darkMode, textHT, pStyle, containerStyle }) => {
    return (
-      <div className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-gray-100">
+      <div
+         className={` backdrop-blur-sm shadow-sm border-b  ${
+            darkMode
+               ? "bg-gray-900 border-gray-800"
+               : "border-gray-100 bg-white/80"
+         }`}
+      >
          <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
                {/* Logo */}
@@ -19,7 +25,7 @@ const AuthHeader = () => {
                      <h1 className="text-xl font-bold bg-gradient-to-r from-blue-700 to-green-600 bg-clip-text text-transparent">
                         Sign in
                      </h1>
-                     <p className="text-sm text-gray-600 font-medium">
+                     <p className={`text-sm font-medium ${pStyle}`}>
                         To unlock full features
                      </p>
                   </div>
@@ -28,7 +34,11 @@ const AuthHeader = () => {
                {/* Back to Home */}
                <Link
                   to="/"
-                  className="flex items-center space-x-2 text-gray-600 hover:text-slate-800 transition-colors duration-300"
+                  className={`flex items-center space-x-2  transition-colors duration-300 ${
+                     darkMode
+                        ? "text-gray-400 hover:text-slate-300"
+                        : "text-gray-600 hover:text-slate-800"
+                  }`}
                >
                   <ArrowLeft className="w-5 h-5" />
                   <span className="font-medium">Back to Home</span>
