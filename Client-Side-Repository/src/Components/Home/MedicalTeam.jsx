@@ -56,7 +56,7 @@ const MedicalTeam = () => {
                darkMode ? "bg-gray-800" : "bg-gray-50"
             }`}
          >
-            <div className="max-w-7xl mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-6 py-8">
                <div className="text-center mb-12">
                   <h2
                      className={`text-3xl md:text-4xl font-bold mb-4 ${textHT}`}
@@ -97,11 +97,11 @@ const MedicalTeam = () => {
                         key={member._id}
                         className={` rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 ${containerStyle}`}
                      >
-                        <div className="relative h-64 bg-gradient-to-br from-blue-400 to-green-400">
+                        <div className="relative bg-gradient-to-br from-blue-400 to-green-400">
                            <img
                               src={member.image}
                               alt={member.name}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover aspect-[16/11]"
                            />
                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                            <div className="absolute bottom-4 left-4 text-white">
@@ -126,21 +126,25 @@ const MedicalTeam = () => {
                               {member.specialization}
                            </p>
 
-                           <div className="space-y-1">
-                              {member.achievements.map((achievement, idx) => (
-                                 <div
-                                    key={idx}
-                                    className={`flex items-center text-xs ${
-                                       darkMode
-                                          ? "text-gray-300"
-                                          : "text-gray-600"
-                                    }`}
-                                 >
-                                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
-                                    {achievement}
-                                 </div>
-                              ))}
-                           </div>
+                           {
+                              <div className="space-y-1">
+                                 {member.achievements.map(
+                                    (achievement, idx) => (
+                                       <div
+                                          key={idx}
+                                          className={`flex items-center text-xs ${
+                                             darkMode
+                                                ? "text-gray-300"
+                                                : "text-gray-600"
+                                          }`}
+                                       >
+                                          <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
+                                          {achievement}
+                                       </div>
+                                    )
+                                 )}
+                              </div>
+                           }
                         </div>
                      </div>
                   ))}

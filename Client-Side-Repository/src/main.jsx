@@ -30,7 +30,7 @@ createRoot(document.getElementById("root")).render(
                />
 
                {/* Devtools */}
-               <ReactQueryDevtools initialIsOpen={false} />
+               {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </QueryClientProvider>
          </SearchProvider>
       </ToggleThemeProvider>

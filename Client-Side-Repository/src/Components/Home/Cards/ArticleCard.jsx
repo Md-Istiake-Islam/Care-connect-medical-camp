@@ -77,7 +77,7 @@ const ArticleCard = ({
                      </div>
                   </div>
                   <div
-                     className={`text-muted-foreground py-2 text-sm pl-2 ${
+                     className={`text-muted-foreground py-2 text-sm font-semibold pl-2 ${
                         darkMode ? "!text-gray-400" : "!text-gray-600"
                      }`}
                   >

@@ -36,7 +36,7 @@ const FeedBack = () => {
 
    return (
       <div className={`py-16 ${darkMode ? "bg-gray-900" : "bg-white"}`}>
-         <div className="container lg:max-w-7xl mx-auto px-6">
+         <div className="container lg:max-w-7xl mx-auto px-6 py-8">
             <div className="text-center mb-12">
                <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${textHT}`}>
                   What Our Patients Say

@@ -10,56 +10,45 @@ import { MdOutlineWrongLocation } from "react-icons/md";
 import AuthContext from "../../Provider/AuthProvider/AuthContext";
 
 const Footer = () => {
-   const { user } = useContext(AuthContext);
-
    const links = (
       <>
-         <li className="text-white rounded-lg">
-            <a
-               href={"#"}
-               className={"!font-nunito p-0 rounded-lg hover:text-primary"}
-            >
-               <p className="text-sm xl:text-sm !font-source-serif font-light mb-1.5">
+         <li className=" rounded-lg">
+            <a href={"#"} className={"!font-nunito p-0 rounded-lg "}>
+               <p className="text-sm xl:text-sm !font-source-serif font-light mb-1.5 text-gray-200 hover:text-white">
                   Home
                </p>
             </a>
          </li>
-         <li className="text-white rounded-lg">
+         <li className=" rounded-lg">
             <a
                href={"#popular-camps"}
-               className={"!font-nunito p-0 rounded-lg hover:text-primary"}
+               className={"!font-nunito p-0 rounded-lg"}
             >
-               <p className="text-sm xl:text-sm !font-source-serif font-light mb-1.5">
+               <p className="text-sm xl:text-sm !font-source-serif font-light mb-1.5 text-gray-200 hover:text-white">
                   Popular camps
                </p>
             </a>
          </li>
-         <li className="text-white rounded-lg">
+         <li className=" rounded-lg">
             <Link
                to={"/available-camps"}
-               className={"!font-nunito p-0 rounded-lg hover:text-primary"}
+               className={"!font-nunito p-0 rounded-lg"}
             >
-               <p className="text-sm xl:text-sm !font-source-serif font-light mb-1.5">
+               <p className="text-sm xl:text-sm !font-source-serif font-light mb-1.5 text-gray-200 hover:text-white">
                   View all camps
                </p>
             </Link>
          </li>
-         <li className="text-white rounded-lg">
-            <a
-               href={"#feedBack"}
-               className={"!font-nunito p-0 rounded-lg hover:text-primary"}
-            >
-               <p className="text-sm xl:text-sm !font-source-serif font-light mb-1.5">
+         <li className=" rounded-lg">
+            <a href={"#feedBack"} className={"!font-nunito p-0 rounded-lg"}>
+               <p className="text-sm xl:text-sm !font-source-serif font-light mb-1.5 text-gray-200 hover:text-white">
                   Feedbacks
                </p>
             </a>
          </li>
-         <li className="text-white rounded-lg">
-            <a
-               href={"#impact-stats"}
-               className={"!font-nunito p-0 rounded-lg hover:text-primary"}
-            >
-               <p className="text-sm xl:text-sm !font-source-serif font-light mb-1.5">
+         <li className=" rounded-lg">
+            <a href={"#impact-stats"} className={"!font-nunito p-0 rounded-lg"}>
+               <p className="text-sm xl:text-sm !font-source-serif font-light mb-1.5 text-gray-200 hover:text-white">
                   Impacts
                </p>
             </a>
@@ -196,7 +185,7 @@ const Footer = () => {
                         <img src={"logo.png"} alt="" className="w-16" />
                      </div>
 
-                     <div className="text-sm text-gray-500 dark:text-gray-400 text-center md:text-right flex items-center">
+                     <div className="text-sm text-gray-300 text-center md:text-right flex items-center">
                         <p>© {new Date().getFullYear()} All rights reserved.</p>
                         <p>Care Camp Medical Services.</p>
                      </div>

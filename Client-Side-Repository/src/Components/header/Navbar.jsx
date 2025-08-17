@@ -350,15 +350,15 @@ const Navbar = () => {
                <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
                      <Phone className="w-4 h-4" />
-                     <span>+91 98765 43210</span>
+                     <span>+880 1704708479</span>
                   </div>
                   <div className="flex items-center space-x-2">
                      <Mail className="w-4 h-4" />
-                     <span>info@medicalcamps.org</span>
+                     <span>carecamp.official@gmail.com</span>
                   </div>
                </div>
                <div className="hidden md:block">
-                  <span>Emergency Hotline: 1800-123-4567</span>
+                  <span>Emergency Hotline: 01704708479</span>
                </div>
             </div>
          </div>

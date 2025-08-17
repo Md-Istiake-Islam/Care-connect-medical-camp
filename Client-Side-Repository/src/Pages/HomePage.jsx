@@ -10,6 +10,7 @@ import ThemeContext from "../Provider/ThemeProvider/ThemeContext";
 import MedicalTeam from "../Components/Home/MedicalTeam";
 import HowItWorks from "@/Components/Home/HowItWorks";
 import HealthArticles from "@/Components/Home/HealthArticles";
+import ScrollToTop from "@/Components/Home/ScrollToTop";
 
 const HomePage = () => {
    //scroll to top
@@ -32,27 +33,28 @@ const HomePage = () => {
          <section>
             <BannerSlider />
          </section>
-         <section id="about-camps" className="scroll-mt-28">
+         <section id="about-camps" className="scroll-mt-15">
             <AboutSection />
          </section>
-         <section id="popular-camps" className="scroll-mt-28">
+         <section id="popular-camps" className="scroll-mt-15">
             <PopularCamp />
          </section>
-         <section id="our-process" className="scroll-mt-28">
+         <section id="our-process" className="scroll-mt-15">
             <HowItWorks />
          </section>
-         <section id="medical-teams" className="scroll-mt-28">
+         <section id="medical-teams" className="scroll-mt-15">
             <MedicalTeam />
          </section>
-         <section id="feedBack" className="scroll-mt-28">
+         <section id="feedBack" className="scroll-mt-15">
             <FeedBack />
          </section>
-         <section id="health-articles" className="scroll-mt-28">
+         <section id="health-articles" className="scroll-mt-15">
             <HealthArticles />
          </section>
-         <section id="impact-stats" className="scroll-mt-28">
+         <section id="impact-stats" className="scroll-mt-15">
             <ImpactStatus />
          </section>
+         <ScrollToTop />
       </div>
    );
 };
