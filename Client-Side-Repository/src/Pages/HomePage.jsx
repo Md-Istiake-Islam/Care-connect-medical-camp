@@ -30,25 +30,25 @@ const HomePage = () => {
          <section>
             <BannerSlider />
          </section>
-         <section id="about-camps">
+         <section id="about-camps" className="scroll-mt-28">
             <AboutSection />
          </section>
-         <section id="popular-camps">
+         <section id="popular-camps" className="scroll-mt-28">
             <PopularCamp />
          </section>
-         <section id="how-it-works">
+         <section id="our-process" className="scroll-mt-28">
             <HowItWorks />
          </section>
-         <section id="medical-teams">
+         <section id="medical-teams" className="scroll-mt-28">
             <MedicalTeam />
          </section>
-         <section id="feedBack">
+         <section id="feedBack" className="scroll-mt-28">
             <FeedBack />
          </section>
-         <section id="health-articles">
+         <section id="health-articles" className="scroll-mt-28">
             <HealthArticles />
          </section>
-         <section id="impact-stats">
+         <section id="impact-stats" className="scroll-mt-28">
             <ImpactStatus />
          </section>
       </div>

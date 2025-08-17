@@ -14,7 +14,7 @@ import {
    Sun,
    Moon,
 } from "lucide-react";
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { Tooltip } from "react-tooltip";
 import AuthContext from "../../Provider/AuthProvider/AuthContext";
@@ -22,7 +22,13 @@ import useUserInfo from "../../Hooks/useUserInfo";
 import ThemeContext from "../../Provider/ThemeProvider/ThemeContext";
 
 const Navbar = () => {
+   // use Navigate
    const navigate = useNavigate();
+
+   // Path name of current location
+   const { pathname } = useLocation();
+
+   // get user from auth context
    const { user, logOut } = useContext(AuthContext);
 
    //get userinfo from hook
@@ -98,6 +104,15 @@ const Navbar = () => {
             });
          });
    };
+
+   // smooth scroll to section
+   const handleClick = (e, id) => {
+      e.preventDefault();
+      const section = document.getElementById(id);
+      if (section) {
+         section.scrollIntoView({ top: "100px", behavior: "smooth" });
+      }
+   };
    const navbarLinks = (
       <>
          <li>
@@ -113,23 +128,156 @@ const Navbar = () => {
                </span>
             </NavLink>
          </li>
+
          <li>
             <NavLink
                to={`./available-camps`}
-               className={`px-4 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+               className={`px-2 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
                   darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
                }`}
             >
                <span className="relative !font-nunito">
-                  Available Camps
+                  Medical Camps
                   <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-500 rounded-full opacity-0 transition-opacity duration-300 [.active_&]:opacity-100"></div>
                </span>
             </NavLink>
          </li>
          <li>
+            <Link
+               onClick={(e) => {
+                  if (pathname === "/") {
+                     handleClick(e, "about-camps");
+                  } else {
+                     navigate("/");
+                     setTimeout(() => {
+                        handleClick(e, "about-camps");
+                     }, 500);
+                  }
+               }}
+               className={`px-2 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+                  darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+               }`}
+            >
+               <span className="relative !font-nunito">
+                  About Us
+                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-500 rounded-full opacity-0 transition-opacity duration-300 [.active_&]:opacity-100"></div>
+               </span>
+            </Link>
+         </li>
+         <li>
+            <Link
+               onClick={(e) => {
+                  if (pathname === "/") {
+                     handleClick(e, "popular-camps");
+                  } else {
+                     navigate("/");
+                     setTimeout(() => {
+                        handleClick(e, "popular-camps");
+                     }, 500);
+                  }
+               }}
+               className={`px-2 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+                  darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+               }`}
+            >
+               <span className="relative !font-nunito">
+                  Popular Camps
+                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-500 rounded-full opacity-0 transition-opacity duration-300 [.active_&]:opacity-100"></div>
+               </span>
+            </Link>
+         </li>
+         <li>
+            <Link
+               onClick={(e) => {
+                  if (pathname === "/") {
+                     handleClick(e, "our-process");
+                  } else {
+                     navigate("/");
+                     setTimeout(() => {
+                        handleClick(e, "our-process");
+                     }, 500);
+                  }
+               }}
+               className={`px-2 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+                  darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+               }`}
+            >
+               <span className="relative !font-nunito">
+                  Process
+                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-500 rounded-full opacity-0 transition-opacity duration-300 [.active_&]:opacity-100"></div>
+               </span>
+            </Link>
+         </li>
+         <li>
+            <Link
+               onClick={(e) => {
+                  if (pathname === "/") {
+                     handleClick(e, "medical-teams");
+                  } else {
+                     navigate("/");
+                     setTimeout(() => {
+                        handleClick(e, "medical-teams");
+                     }, 500);
+                  }
+               }}
+               className={`px-2 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+                  darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+               }`}
+            >
+               <span className="relative !font-nunito">
+                  Teams
+                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-500 rounded-full opacity-0 transition-opacity duration-300 [.active_&]:opacity-100"></div>
+               </span>
+            </Link>
+         </li>
+         <li>
+            <Link
+               onClick={(e) => {
+                  if (pathname === "/") {
+                     handleClick(e, "feedBack");
+                  } else {
+                     navigate("/");
+                     setTimeout(() => {
+                        handleClick(e, "feedBack");
+                     }, 500);
+                  }
+               }}
+               className={`px-2 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+                  darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+               }`}
+            >
+               <span className="relative !font-nunito">
+                  Feedback
+                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-500 rounded-full opacity-0 transition-opacity duration-300 [.active_&]:opacity-100"></div>
+               </span>
+            </Link>
+         </li>
+         <li>
+            <Link
+               onClick={(e) => {
+                  if (pathname === "/") {
+                     handleClick(e, "health-articles");
+                  } else {
+                     navigate("/");
+                     setTimeout(() => {
+                        handleClick(e, "health-articles");
+                     }, 500);
+                  }
+               }}
+               className={`px-2 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+                  darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+               }`}
+            >
+               <span className="relative !font-nunito">
+                  Health Tips
+                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-500 rounded-full opacity-0 transition-opacity duration-300 [.active_&]:opacity-100"></div>
+               </span>
+            </Link>
+         </li>
+         <li>
             <NavLink
                to={`./contact-us`}
-               className={`px-4 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+               className={`px-2 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
                   darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
                }`}
             >
@@ -267,8 +415,8 @@ const Navbar = () => {
                      </div>
                   </div>
 
-                  <div className="flex items-center space-x-4">
-                     <ul className="menu menu-horizontal px-1 text-lg font-medium gap-1 items-center hidden lg:flex">
+                  <div className="flex items-center space-x-3">
+                     <ul className="menu menu-horizontal px-0.5 gap-1.5 text-base font-medium  items-center hidden lg:flex">
                         {navbarLinks}
                      </ul>
 
