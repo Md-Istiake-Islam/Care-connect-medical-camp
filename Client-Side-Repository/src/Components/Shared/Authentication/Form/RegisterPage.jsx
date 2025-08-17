@@ -9,6 +9,7 @@ import axiosSecure from "../../../../Utility/axiosSecure";
 import axios from "axios";
 import { useUploadImgToImgBB } from "../../../../Hooks/useUploadImgToImgBB";
 import Swal from "sweetalert2";
+import ThemeContext from "@/Provider/ThemeProvider/ThemeContext";
 
 const RegisterPage = () => {
    //page title
@@ -20,6 +21,24 @@ const RegisterPage = () => {
    //page location
    const location = useLocation();
    const navigate = useNavigate();
+
+   //get theme data from theme context
+   const { darkMode } = useContext(ThemeContext);
+
+   //set heading and title text style
+   const textHT = darkMode ? "text-white" : "text-gray-900";
+
+   //set paragraph style
+   const pStyle = darkMode ? "text-gray-400" : "text-gray-600";
+
+   //container style
+   const containerStyle = darkMode
+      ? "bg-gray-800 border-gray-700"
+      : "bg-white border-gray-100";
+
+   const inputStyle = darkMode
+      ? "border-gray-600/50 bg-gray-700/30 text-gray-300 focus:700/40"
+      : "border-gray-200 bg-gray-50 text-gray-700 focus:bg-white";
 
    //use react hook form
    const {
@@ -126,16 +145,18 @@ const RegisterPage = () => {
    });
 
    return (
-      <div className="bg-white lg:bg-transparent rounded-3xl shadow-2xl lg:shadow-none border lg:border-0 border-gray-100 px-8 py-12 lg:p-0">
+      <div
+         className={`lg:bg-transparent rounded-3xl shadow-2xl lg:shadow-none border lg:border-0 px-8 py-12 lg:p-0 ${containerStyle}`}
+      >
          {/* Header */}
          <div className="lg:hidden text-center mb-12 ">
             <div className="w-16 h-16 bg-gradient-to-br from-green-600 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                <User className="w-8 h-8 text-white" />
             </div>
-            <h2 className=" text-3xl font-bold text-slate-800 mb-2">
+            <h2 className={`text-3xl font-bold mb-2 ${textHT}`}>
                Create Account
             </h2>
-            <p className=" text-gray-600">
+            <p className={`${pStyle}`}>
                Join our medical camp community and start making a difference
             </p>
          </div>
@@ -145,7 +166,9 @@ const RegisterPage = () => {
             {/* Name Fields */}
             <div className="grid grid-cols-2 gap-4">
                <div>
-                  <label className="text-sm font-semibold text-slate-800 mb-2 flex items-center justify-between">
+                  <label
+                     className={`text-sm font-semibold mb-2 flex items-center justify-between ${textHT}`}
+                  >
                      First Name
                      {errors.firstName && (
                         <p className="text-red-500 text-sm pl-2">
@@ -158,13 +181,15 @@ const RegisterPage = () => {
                      <input
                         type="text"
                         {...register("firstName", { required: "**" })}
-                        className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                        className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all duration-300 ${inputStyle}`}
                         placeholder="First name"
                      />
                   </div>
                </div>
                <div>
-                  <label className="text-sm font-semibold text-slate-800 mb-2 flex items-center justify-between">
+                  <label
+                     className={`text-sm font-semibold mb-2 flex items-center justify-between ${textHT}`}
+                  >
                      Last Name
                      {errors.lastName && (
                         <p className="text-red-500 text-sm pl-2">
@@ -177,7 +202,7 @@ const RegisterPage = () => {
                      <input
                         type="text"
                         {...register("lastName", { required: "**" })}
-                        className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                        className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all duration-300 ${inputStyle}`}
                         placeholder="Last name"
                      />
                   </div>
@@ -186,7 +211,9 @@ const RegisterPage = () => {
 
             {/* Email Field */}
             <div>
-               <label className="text-sm font-semibold text-slate-800 mb-2 flex items-center justify-between">
+               <label
+                  className={`text-sm font-semibold mb-2 flex items-center justify-between ${textHT}`}
+               >
                   Email Address
                   {errors.email && (
                      <p className="text-red-500 text-sm pl-2">
@@ -199,7 +226,7 @@ const RegisterPage = () => {
                   <input
                      type="email"
                      {...register("email", { required: "* required *" })}
-                     className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                     className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all duration-300 ${inputStyle}`}
                      placeholder="Enter your email"
                   />
                </div>
@@ -207,7 +234,9 @@ const RegisterPage = () => {
 
             {/* Password Field */}
             <div>
-               <label className="text-sm font-semibold text-slate-800 mb-2 flex items-center justify-between">
+               <label
+                  className={`text-sm font-semibold mb-2 flex items-center justify-between ${textHT}`}
+               >
                   Password
                   {errors.password && (
                      <p className="text-red-500 text-sm pl-2">
@@ -226,7 +255,7 @@ const RegisterPage = () => {
                         },
                      })}
                      type={showPassword ? "text" : "password"}
-                     className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                     className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all duration-300 ${inputStyle}`}
                      placeholder="Create a password"
                   />
                   <button
@@ -245,7 +274,9 @@ const RegisterPage = () => {
 
             {/* Image Upload */}
             <div>
-               <label className="text-sm font-semibold text-slate-800 mb-2 flex items-center justify-between">
+               <label
+                  className={`text-sm font-semibold mb-2 flex items-center justify-between ${textHT}`}
+               >
                   Profile Image
                   {errors.image && (
                      <p className="text-red-500 text-sm pl-2">
@@ -271,7 +302,11 @@ const RegisterPage = () => {
                   />
                   <label
                      htmlFor="image-upload"
-                     className="w-full flex items-center justify-center px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl hover:border-blue-400 transition-all duration-300 cursor-pointer bg-gray-50 hover:bg-blue-50"
+                     className={`w-full flex items-center justify-center px-4 py-3 border-2 border-dashed  rounded-xl hover:border-blue-400 transition-all duration-300 cursor-pointer  ${
+                        darkMode
+                           ? "border-gray-600/50 bg-gray-700/30 hover:bg-blue-800/20"
+                           : "border-gray-300 bg-gray-50 hover:bg-blue-50"
+                     }`}
                   >
                      <div className="text-center">
                         {imagePreview ? (
@@ -281,14 +316,14 @@ const RegisterPage = () => {
                                  alt="Preview"
                                  className="w-12 h-12 rounded-full object-cover"
                               />
-                              <span className="text-sm text-gray-600">
+                              <span className={`"text-sm ${pStyle}`}>
                                  Image selected
                               </span>
                            </div>
                         ) : (
                            <div className="flex items-center space-x-3">
                               <Upload className="w-6 h-6 text-gray-400" />
-                              <span className="text-sm text-gray-600">
+                              <span className={`text-sm ${pStyle}`}>
                                  Upload profile image
                               </span>
                            </div>
@@ -321,10 +356,18 @@ const RegisterPage = () => {
             {/* Divider */}
             <div className="relative">
                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-200"></div>
+                  <div
+                     className={`w-full border-t  ${
+                        darkMode ? "border-gray-700" : "border-gray-200"
+                     }`}
+                  ></div>
                </div>
                <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500">
+                  <span
+                     className={`px-4 ${pStyle} ${
+                        darkMode ? "bg-gray-800" : "bg-white"
+                     }`}
+                  >
                      Or continue with
                   </span>
                </div>
@@ -335,7 +378,11 @@ const RegisterPage = () => {
                type="button"
                onClick={signInWithGoogle}
                disabled={loading}
-               className="w-full bg-white border border-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-3"
+               className={`w-full border py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-3 ${
+                  darkMode
+                     ? "border-gray-600/50 bg-gray-700/30 text-gray-300 "
+                     : "border-gray-200 bg-gray-50 text-gray-700 "
+               }`}
             >
                <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path
@@ -358,8 +405,12 @@ const RegisterPage = () => {
                <span>Sign up with Google</span>
             </button>
          </form>
-         <div className="text-center mt-8 pt-6 border-t border-gray-100 lg:hidden">
-            <p className="text-gray-600">
+         <div
+            className={`text-center mt-8 pt-6 border-t lg:hidden ${
+               darkMode ? "border-gray-700" : " border-gray-100"
+            }`}
+         >
+            <p className={`${pStyle}`}>
                Already have an account?{" "}
                <Link
                   to={"/authentication/login"}

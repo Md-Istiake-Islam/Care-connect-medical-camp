@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import axiosSecure from "../../../../Utility/axiosSecure";
 import useTitle from "../../../../Hooks/useTitle";
 import { useGoogleSignIn } from "../../../../Hooks/useGoogleSignIn";
+import ThemeContext from "@/Provider/ThemeProvider/ThemeContext";
 
 const LoginPage = () => {
    //page title
@@ -18,6 +19,24 @@ const LoginPage = () => {
    //page location
    const location = useLocation();
    const navigate = useNavigate();
+
+   //get theme data from theme context
+   const { darkMode } = useContext(ThemeContext);
+
+   //set heading and title text style
+   const textHT = darkMode ? "text-white" : "text-gray-900";
+
+   //set paragraph style
+   const pStyle = darkMode ? "text-gray-400" : "text-gray-600";
+
+   //container style
+   const containerStyle = darkMode
+      ? "bg-gray-800 border-gray-700"
+      : "bg-white border-gray-100";
+
+   const inputStyle = darkMode
+      ? "border-gray-600/50 bg-gray-700/30 text-gray-300 focus:700/40"
+      : "border-gray-200 bg-gray-50 text-gray-700 focus:bg-white";
 
    //use react hook form
    const {
@@ -78,16 +97,18 @@ const LoginPage = () => {
    });
 
    return (
-      <div className="bg-white lg:bg-transparent rounded-3xl shadow-2xl lg:shadow-none border lg:border-0 border-gray-100 px-8 py-12 lg:p-0">
+      <div
+         className={`lg:bg-transparent rounded-3xl shadow-2xl lg:shadow-none border lg:border-0 px-8 py-12 lg:p-0 ${containerStyle}`}
+      >
          {/* Header */}
          <div className="text-center  mb-12 lg:hidden">
             <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                <Heart className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-3xl font-bold text-slate-800 mb-2">
+            <h2 className={`text-3xl font-bold mb-2 ${textHT}`}>
                Welcome Back
             </h2>
-            <p className="text-gray-600">
+            <p className={`${pStyle}`}>
                Sign in to join medical camps and make a difference
             </p>
          </div>
@@ -96,10 +117,14 @@ const LoginPage = () => {
          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Email Field */}
             <div>
-               <h2 className="text-xl font-bold text-slate-800 mb-8 hidden lg:block">
+               <h2
+                  className={`text-xl font-bold mb-8 hidden lg:block ${textHT}`}
+               >
                   Log In to Continue
                </h2>
-               <label className="text-sm font-semibold text-slate-800 mb-2 flex items-center justify-between">
+               <label
+                  className={`text-sm font-semibold mb-2 flex items-center justify-between ${textHT}`}
+               >
                   Email Address
                   {errors.email && (
                      <p className="text-red-500 text-sm pl-2">
@@ -112,7 +137,7 @@ const LoginPage = () => {
                   <input
                      {...register("email", { required: "* required *" })}
                      type="email"
-                     className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                     className={`w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all duration-300 ${inputStyle}`}
                      placeholder="Enter your email"
                   />
                </div>
@@ -120,7 +145,9 @@ const LoginPage = () => {
 
             {/* Password Field */}
             <div>
-               <label className="text-sm font-semibold text-slate-800 mb-2 flex items-center justify-between">
+               <label
+                  className={`text-sm font-semibold text-slate-800 mb-2 flex items-center justify-between ${textHT}`}
+               >
                   Password
                   {errors.password && (
                      <p className="text-red-500 text-sm pl-2">
@@ -139,7 +166,7 @@ const LoginPage = () => {
                         },
                      })}
                      type={showPassword ? "text" : "password"}
-                     className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                     className={`w-full pl-12 pr-12 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all duration-300  ${inputStyle}`}
                      placeholder="Enter your password"
                   />
 
@@ -164,13 +191,15 @@ const LoginPage = () => {
                      type="checkbox"
                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
-                  <span className="ml-2 text-sm text-gray-600">
-                     Remember me
-                  </span>
+                  <span className={`ml-2 text-sm ${pStyle}`}>Remember me</span>
                </label>
                <Link
                   to="/forgot-password"
-                  className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                  className={`text-sm font-medium ${
+                     darkMode
+                        ? "text-blue-400 hover:text-blue-500"
+                        : "text-blue-600 hover:text-blue-700 "
+                  }`}
                >
                   Forgot password?
                </Link>
@@ -195,10 +224,18 @@ const LoginPage = () => {
             {/* Divider */}
             <div className="relative">
                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-200"></div>
+                  <div
+                     className={`w-full border-t  ${
+                        darkMode ? "border-gray-700" : "border-gray-200"
+                     }`}
+                  ></div>
                </div>
                <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500">
+                  <span
+                     className={`px-4 ${pStyle} ${
+                        darkMode ? "bg-gray-800" : "bg-white"
+                     }`}
+                  >
                      Or continue with
                   </span>
                </div>
@@ -209,7 +246,11 @@ const LoginPage = () => {
                type="button"
                onClick={signInWithGoogle}
                disabled={loading}
-               className="w-full bg-white border border-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-3"
+               className={`w-full border py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-3 ${
+                  darkMode
+                     ? "border-gray-600/50 bg-gray-700/30 text-gray-300 "
+                     : "border-gray-200 bg-gray-50 text-gray-700 "
+               }`}
             >
                <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path
@@ -232,8 +273,12 @@ const LoginPage = () => {
                <span>Sign in with Google</span>
             </button>
          </form>
-         <div className="text-center mt-8 pt-6 border-t border-gray-100 lg:hidden">
-            <p className="text-gray-600">
+         <div
+            className={`text-center mt-8 pt-6 border-t lg:hidden ${
+               darkMode ? "border-gray-700" : " border-gray-100"
+            }`}
+         >
+            <p className={`${pStyle}`}>
                Don't have an account?{" "}
                <Link
                   to={"/authentication/register"}
