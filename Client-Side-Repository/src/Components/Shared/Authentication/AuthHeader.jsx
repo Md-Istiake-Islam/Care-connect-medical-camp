@@ -8,7 +8,7 @@ const AuthHeader = ({ darkMode, textHT, pStyle, containerStyle }) => {
       <div
          className={` backdrop-blur-sm shadow-sm border-b  ${
             darkMode
-               ? "bg-gray-900 border-gray-800"
+               ? "bg-gray-900/99 border-gray-800"
                : "border-gray-100 bg-white/80"
          }`}
       >

@@ -55,7 +55,15 @@ const Authentication = () => {
                   <div className="grid lg:grid-cols-2 gap-12 items-center">
                      {/* Left Side - Image and Info */}
                      <div className="pt-1">
-                        {<WelcomeToJoin currentLocation={currentLocation} />}
+                        {
+                           <WelcomeToJoin
+                              currentLocation={currentLocation}
+                              darkMode={darkMode}
+                              textHT={textHT}
+                              pStyle={pStyle}
+                              containerStyle={containerStyle}
+                           />
+                        }
                      </div>
                      {/* Authentication form */}
                      <div>
@@ -63,8 +71,12 @@ const Authentication = () => {
                      </div>
                   </div>
                   {/* Sign In Link */}
-                  <div className="text-center mt-8 pt-6 border-t border-gray-100 hidden lg:block">
-                     <p className="text-gray-600">
+                  <div
+                     className={`text-center mt-8 pt-6 border-t  hidden lg:block ${
+                        darkMode ? "border-gray-600" : "border-gray-100"
+                     }`}
+                  >
+                     <p className={`${pStyle}`}>
                         {currentLocation === "login"
                            ? "Don't have an account? "
                            : "Already have an account? "}
@@ -74,7 +86,11 @@ const Authentication = () => {
                                  ? "/authentication/register"
                                  : "/authentication/login"
                            }
-                           className="text-blue-600 hover:text-blue-700 font-semibold"
+                           className={` font-semibold ${
+                              darkMode
+                                 ? "text-blue-400 hover:text-blue-400/80"
+                                 : "text-blue-600 hover:text-blue-700"
+                           } transition-colors duration-200`}
                         >
                            {currentLocation === "login"
                               ? "Create Account"
