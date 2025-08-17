@@ -11,7 +11,6 @@ export const useManageCamps = ({
 } = {}) => {
    //set state for total camps
    const [totalCount, setTotalCount] = useState();
-   const [revenue, setRevenue] = useState();
 
    const {
       data: camps = [],
@@ -25,11 +24,11 @@ export const useManageCamps = ({
             `/manage-camps?page=${currentPage}&limit=${limit}&searchTerm=${encodedSearch}`
          );
          setTotalCount(res.data.totalCount);
-         setRevenue(res.data.revenue);
+
          return res.data.camps;
       },
       keepPreviousData: true,
    });
 
-   return { camps, totalCount, revenue, isLoading, error };
+   return { camps, totalCount, isLoading, error };
 };

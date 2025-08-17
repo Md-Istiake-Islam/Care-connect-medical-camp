@@ -91,10 +91,8 @@ const ImpactStatus = () => {
    ];
    return (
       <section
-         className={`py-16 bg-gradient-to-br transition-colors duration-300 ${
-            darkMode
-               ? "from-gray-800 to-blue-900/20"
-               : "from-gray-50 to-blue-50"
+         className={`py-16 transition-colors duration-300 ${
+            darkMode ? "bg-gray-900" : "bg-gray-50"
          }`}
       >
          <div className="max-w-7xl mx-auto px-6">

@@ -10,7 +10,7 @@ const FeedbackCard = ({
 }) => {
    return (
       <div
-         className={`rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${containerStyle}`}
+         className={`rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border ${containerStyle}`}
       >
          <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">

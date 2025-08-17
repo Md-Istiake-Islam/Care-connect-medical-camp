@@ -5,6 +5,7 @@ import {
    User,
    UserRoundCog,
    ClipboardList,
+   BarChart3,
 } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import useUserInfo from "../../../Hooks/useUserInfo";
@@ -15,6 +16,7 @@ const OrganizerMenu = ({ darkMode }) => {
    const location = useLocation();
 
    const menuItems = [
+      { icon: BarChart3, label: "Analytics", link: "/dashboard/analytics" },
       { icon: ClipboardPlus, label: "Add A Camp", link: "/dashboard/add-camp" },
       {
          icon: ClipboardPen,

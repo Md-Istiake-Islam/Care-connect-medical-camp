@@ -20,6 +20,7 @@ import RegisteredCamps from "../Components/Dashboard/Pages/RegisteredCamps";
 import EditProfilePage from "../Components/Dashboard/Pages/EditProfilePage";
 import ProfilePage from "../Components/Dashboard/Pages/ProfilePage";
 import UpdateCamp from "../Components/Dashboard/Components/Admin/Form/UpdateCamp";
+import ContactUs from "@/Pages/ContactUs";
 
 const Routes = createBrowserRouter([
    {
@@ -40,6 +41,11 @@ const Routes = createBrowserRouter([
          {
             path: "camp-details/:id",
             Component: CampDetailPage,
+            hydrateFallbackElement: <LoadingSpinner />,
+         },
+         {
+            path: "contact-us",
+            Component: ContactUs,
             hydrateFallbackElement: <LoadingSpinner />,
          },
       ],

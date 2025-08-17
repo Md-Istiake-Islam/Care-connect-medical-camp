@@ -126,6 +126,19 @@ const Navbar = () => {
                </span>
             </NavLink>
          </li>
+         <li>
+            <NavLink
+               to={`./contact-us`}
+               className={`px-4 py-0.5 rounded-lg hover:text-blue-400 hover:bg-transparent transition-all duration-300 relative ${linkStyle} ${
+                  darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+               }`}
+            >
+               <span className="relative !font-nunito">
+                  Contact Us
+                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-500 rounded-full opacity-0 transition-opacity duration-300 [.active_&]:opacity-100"></div>
+               </span>
+            </NavLink>
+         </li>
       </>
    );
 
@@ -352,11 +365,7 @@ const Navbar = () => {
                                        <ul>
                                           <li>
                                              <Link
-                                                to={
-                                                   role === "Participant"
-                                                      ? "/dashboard/analytics"
-                                                      : "/dashboard/add-camp"
-                                                }
+                                                to={"./dashboard/analytics"}
                                                 className={`flex items-center text-sm space-x-3 px-4 py-3 rounded-xl transition-colors duration-200 ${ddMenuStyle}`}
                                              >
                                                 <LayoutDashboard className="w-5 h-5" />

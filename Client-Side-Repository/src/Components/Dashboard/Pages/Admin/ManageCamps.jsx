@@ -12,6 +12,7 @@ import MngCampsStatusCard from "../../Components/Admin/MngCampsStatusCard";
 import useDeleteCamp from "../../../../Hooks/useDeleteCamp";
 import ThemeContext from "../../../../Provider/ThemeProvider/ThemeContext";
 import useTitle from "../../../../Hooks/useTitle";
+import useOrganizerRevenue from "@/Hooks/useOrganizerRevenue";
 
 const ManageRegCamps = () => {
    //scroll to top
@@ -45,17 +46,14 @@ const ManageRegCamps = () => {
    const itemsPerPage = 10;
 
    // use hooks to get camps data and manage loading state
-   const {
-      camps,
-      totalCount,
-      revenue: campsRevenue,
-      isLoading,
-      error,
-   } = useManageCamps({
+   const { camps, totalCount, isLoading, error } = useManageCamps({
       searchTerm,
       limit: itemsPerPage,
       currentPage,
    });
+
+   //get organizer revenue
+   const { revenue: campsRevenue } = useOrganizerRevenue();
 
    // hook for delete selected reg camp
 

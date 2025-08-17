@@ -8,29 +8,45 @@ import {
    LineChart,
    Line,
 } from "recharts";
-import { Activity, Edit3 } from "lucide-react";
+import { Activity, DollarSign, Edit3 } from "lucide-react";
 import useParticipantStats from "../../../Hooks/useParticipantStats";
 import LoadingSpinner from "../../Shared/LoadingElement/LoadingSpinner";
 import StatCard from "../Components/StatCard";
 import { Link } from "react-router";
 import ThemeContext from "../../../Provider/ThemeProvider/ThemeContext";
 import useTitle from "../../../Hooks/useTitle";
+import useOrganizerRevenue from "@/Hooks/useOrganizerRevenue";
+import useUserInfo from "@/Hooks/useUserInfo";
+import MngCampsStatusCard from "../Components/Admin/MngCampsStatusCard";
 
 const AnalyticsPage = () => {
    //scroll to top
    useTitle("Analytics Dashboard || CareConnect Medical Camp");
+
+   // get user info from hooks
+   const { role } = useUserInfo();
+
+   // get participant stats
    const { stats, paymentStats } = useParticipantStats();
-   const { theme } = useContext(ThemeContext);
-   const [darkMode, setDarkMode] = useState(false);
 
-   // set theme
-   useEffect(() => {
-      setDarkMode(theme === "dark" ? true : false);
-   }, [setDarkMode, theme, darkMode]);
+   //get organizer revenue
+   const { revenue } = useOrganizerRevenue();
 
-   if (!stats || !paymentStats) {
+   // get theme data from theme context
+   const { darkMode } = useContext(ThemeContext);
+
+   if (!role) {
       return <LoadingSpinner />;
    }
+   if (role === "Organizer" && !revenue) {
+      return <LoadingSpinner />;
+   }
+   if (role === "Participant" && (!stats || !paymentStats)) {
+      return <LoadingSpinner />;
+   }
+
+   const paymentStatsData =
+      role === "Organizer" ? revenue.paymentStats : paymentStats;
 
    // set container style
    const containerStyle = darkMode
@@ -67,23 +83,45 @@ const AnalyticsPage = () => {
                   </div>
 
                   <Link
-                     to={`/dashboard/payment-history`}
+                     to={`${
+                        role === "Organizer"
+                           ? "/dashboard/manage-camps"
+                           : "/dashboard/payment-history"
+                     }`}
                      className="bg-gradient-to-r from-blue-600 to-green-500 text-white px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-[1.02] flex items-center space-x-2"
                   >
-                     <Edit3 className="w-5 h-5" />
-                     <span>Payment History</span>
+                     {role === "Organizer" ? (
+                        <Edit3 className="w-5 h-5" />
+                     ) : (
+                        <DollarSign className="w-5 h-5" />
+                     )}
+                     <span>
+                        {role === "Organizer"
+                           ? "Manage-camps"
+                           : "Payment History"}
+                     </span>
                   </Link>
                </div>
             </div>
 
             {/* Key Metrics */}
-            <StatCard
-               stats={stats}
-               containerStyle={containerStyle}
-               pStyle={pStyle}
-               textHT={textHT}
-               darkMode={darkMode}
-            />
+            {role === "Organizer" ? (
+               <MngCampsStatusCard
+                  campsRevenue={revenue}
+                  containerStyle={containerStyle}
+                  pStyle={pStyle}
+                  textHT={textHT}
+                  darkMode={darkMode}
+               />
+            ) : (
+               <StatCard
+                  stats={stats}
+                  containerStyle={containerStyle}
+                  pStyle={pStyle}
+                  textHT={textHT}
+                  darkMode={darkMode}
+               />
+            )}
 
             {/* Revenue Trends */}
             <div
@@ -100,7 +138,7 @@ const AnalyticsPage = () => {
                   </div>
                </div>
                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={paymentStats}>
+                  <LineChart data={paymentStatsData}>
                      <CartesianGrid
                         strokeDasharray="3 3"
                         stroke={`${darkMode ? "#343435" : "#f0f0f0"}`}

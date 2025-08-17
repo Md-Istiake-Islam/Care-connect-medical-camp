@@ -9,6 +9,7 @@ import AboutSection from "../Components/Home/AboutSection";
 import ThemeContext from "../Provider/ThemeProvider/ThemeContext";
 import MedicalTeam from "../Components/Home/MedicalTeam";
 import HowItWorks from "@/Components/Home/HowItWorks";
+import HealthArticles from "@/Components/Home/HealthArticles";
 
 const HomePage = () => {
    //scroll to top
@@ -44,7 +45,9 @@ const HomePage = () => {
          <section id="feedBack">
             <FeedBack />
          </section>
-
+         <section id="health-articles">
+            <HealthArticles />
+         </section>
          <section id="impact-stats">
             <ImpactStatus />
          </section>
