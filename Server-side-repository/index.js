@@ -69,11 +69,14 @@ const run = async () => {
    //Slider items collection
    const sliderCollection = db.collection("BannerSlider");
 
-   //Slider items collection
+   //Medical Teams collection
    const medicalTeamsCollection = db.collection("MedicalTeams");
 
-   //Slider items collection
+   //working Steps collection
    const workingStepsCollection = db.collection("workingSteps");
+
+   //Health Article collection
+   const articlesCollection = db.collection("HealthArticle");
 
    //Medical camp items collection
    const campCollection = db.collection("Medical_Camps");
@@ -229,6 +232,12 @@ const run = async () => {
          res.send(result);
       });
 
+      // get Health Articles data
+      app.get("/health-article", async (req, res) => {
+         const result = await articlesCollection.find().toArray();
+         res.send(result);
+      });
+
       // post camp data
       app.post("/camps", verifyToken, verifyOrganizer, async (req, res) => {
          const campData = req.body;
@@ -354,9 +363,9 @@ const run = async () => {
 
                if (searchTerm) {
                   query.$or = [
-                     { name: new RegExp(search, "i") },
-                     { location: new RegExp(search, "i") },
-                     { healthcareProfessional: new RegExp(search, "i") },
+                     { campName: { $regex: searchTerm, $options: "i" } },
+                     { location: { $regex: searchTerm, $options: "i" } },
+                     { healthPro: { $regex: searchTerm, $options: "i" } },
                   ];
                }
 
@@ -374,66 +383,7 @@ const run = async () => {
                   .limit(limit)
                   .toArray();
 
-               const [campStatus] = await campCollection
-                  .aggregate([
-                     {
-                        $group: {
-                           _id: null,
-                           totalData: {
-                              $sum: 1,
-                           },
-                           totalParticipant: {
-                              $sum: {
-                                 $toInt: "$participantCount",
-                              },
-                           },
-                           totalRevenue: {
-                              $sum: {
-                                 $multiply: [
-                                    {
-                                       $toInt: "$participantCount",
-                                    },
-                                    {
-                                       $toInt: "$campFees",
-                                    },
-                                 ],
-                              },
-                           },
-                        },
-                     },
-                  ])
-                  .toArray();
-
-               const [totalConfirm] = await participantCollection
-                  .aggregate([
-                     {
-                        $group: {
-                           _id: null,
-                           totalConfirm: {
-                              $sum: {
-                                 $cond: [
-                                    {
-                                       $eq: [
-                                          "$confirmationStatus",
-                                          "confirmed",
-                                       ],
-                                    },
-                                    1,
-                                    0,
-                                 ],
-                              },
-                           },
-                        },
-                     },
-                  ])
-                  .toArray();
-
-               const revenue = {
-                  ...campStatus,
-                  totalConfirm: totalConfirm.totalConfirm,
-               };
-
-               res.send({ camps, totalCount, revenue });
+               res.send({ camps, totalCount });
             } catch (err) {
                res.status(500).send({
                   error: "Failed to fetch organizer stats",
@@ -978,6 +928,106 @@ const run = async () => {
             res.send(result);
          }
       );
+
+      //organizer stats
+      app.get("/organizer-stats", verifyToken, async (req, res) => {
+         try {
+            const [campStatus] = await campCollection
+               .aggregate([
+                  {
+                     $group: {
+                        _id: null,
+                        totalData: {
+                           $sum: 1,
+                        },
+                        totalParticipant: {
+                           $sum: {
+                              $toInt: "$participantCount",
+                           },
+                        },
+                        totalRevenue: {
+                           $sum: {
+                              $multiply: [
+                                 {
+                                    $toInt: "$participantCount",
+                                 },
+                                 {
+                                    $toInt: "$campFees",
+                                 },
+                              ],
+                           },
+                        },
+                     },
+                  },
+               ])
+               .toArray();
+
+            const [totalConfirm] = await participantCollection
+               .aggregate([
+                  {
+                     $group: {
+                        _id: null,
+                        totalConfirm: {
+                           $sum: {
+                              $cond: [
+                                 {
+                                    $eq: ["$confirmationStatus", "confirmed"],
+                                 },
+                                 1,
+                                 0,
+                              ],
+                           },
+                        },
+                     },
+                  },
+               ])
+               .toArray();
+
+            const data = await paymentCollection
+               .aggregate([
+                  {
+                     $addFields: {
+                        PaymentDate: { $toDate: "$paymentDate" },
+                     },
+                  },
+                  {
+                     $group: {
+                        _id: {
+                           $dateToString: {
+                              format: "%B %d %Y",
+                              date: "$PaymentDate",
+                           },
+                        },
+                        sortDate: { $min: "$PaymentDate" },
+                        totalPay: {
+                           $sum: {
+                              $toInt: "$campFees",
+                           },
+                        },
+                     },
+                  },
+               ])
+               .toArray();
+
+            const paymentStats = data.map((data) => ({
+               date: data._id,
+               totalPay: data.totalPay,
+            }));
+
+            const revenue = {
+               ...campStatus,
+               totalConfirm: totalConfirm.totalConfirm,
+               paymentStats,
+            };
+
+            res.send(revenue);
+         } catch (err) {
+            res.status(500).send({
+               message: "Something went wrong",
+               error: err.message,
+            });
+         }
+      });
 
       //user stats
       app.get("/user-stats", verifyToken, async (req, res) => {
