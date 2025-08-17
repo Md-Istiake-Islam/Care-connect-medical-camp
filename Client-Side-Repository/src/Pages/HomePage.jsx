@@ -14,6 +14,8 @@ import HealthArticles from "@/Components/Home/HealthArticles";
 const HomePage = () => {
    //scroll to top
    useTitle("Home || CareConnect Medical Camp");
+
+   // scroll to always open top of page
    const { pathname } = useLocation();
    useEffect(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
